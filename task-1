@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void writeFile(const char *filename) {
+    FILE *file = fopen(filename, "w");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
+    fprintf(file, "Hello, this is a test file.\n");
+    fprintf(file, "Writing some data...\n");
+    fclose(file);
+    printf("Data written successfully.\n");
+}
+
+void readFile(const char *filename) {
+    FILE *file = fopen(filename, "r");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
+    char buffer[255];
+    printf("File content:\n");
+    while (fgets(buffer, sizeof(buffer), file)) {
+        printf("%s", buffer);
+    }
+    fclose(file);
+}
+
+void appendFile(const char *filename) {
+    FILE *file = fopen(filename, "a");
+    if (file == NULL) {
+        perror("Error opening file");
+        return;
+    }
+    fprintf(file, "Appending new line...\n");
+    fclose(file);
+    printf("Data appended successfully.\n");
+}
+
+int main() {
+    const char *filename = "testfile.txt";
+    
+    writeFile(filename);
+    readFile(filename);
+    appendFile(filename);
+    readFile(filename);
+    
+    return 0;
+}
